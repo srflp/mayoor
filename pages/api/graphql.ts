@@ -6,6 +6,7 @@ import { createContext } from "@backend/context";
 import { schema } from "@backend/schema";
 
 const apolloServer = new ApolloServer({
+  // cache: 'bounded',
   context: createContext,
   schema,
 });

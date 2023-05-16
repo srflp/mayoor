@@ -17,33 +17,30 @@ export const GetAllOrders = queryField("getAllOrders", {
     { status, orderByUrgency, customerId, ...args },
     ctx
   ) => {
-    const orders = await ctx.prisma.order.findMany({
-      take: args.first ?? undefined,
-      skip: args.skip ?? undefined,
-      where: {
-        status: status ?? undefined,
-        customerId,
-        deleted: false,
-      },
-      orderBy: orderByUrgency
-        ? { urgency: orderByUrgency }
-        : { createdAt: "desc" },
-    });
-
-    const allMatchingOrdersCount =
-      orders.length > 0
-        ? await ctx.prisma.order.count({
-            where: {
-              status: status ?? undefined,
-              customerId,
-              deleted: false,
-            },
-          })
-        : 0;
+    const where = {
+      status: status ?? undefined,
+      customerId,
+      deleted: false,
+    };
+    const [totalCount, items] = await ctx.prisma.$transaction(
+      [
+        ctx.prisma.order.count({
+          where,
+        }),
+        ctx.prisma.order.findMany({
+          take: args.first ?? undefined,
+          skip: args.skip ?? undefined,
+          where,
+          orderBy: orderByUrgency
+            ? { urgency: orderByUrgency }
+            : { createdAt: "desc" },
+        }),
+      ]
+    )
 
     return {
-      totalCount: allMatchingOrdersCount,
-      items: orders,
+      totalCount: totalCount ?? 0,
+      items,
     };
   },
 });
