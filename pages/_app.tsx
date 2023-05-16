@@ -95,5 +95,5 @@ const AppWithProviders: React.FC<AppProps> = (props) => (
     </AppContextProvider>
   </ApolloProvider>
 );
-
+// @ts-ignore
 export default appWithTranslation(AppWithProviders, nextI18nConfig);

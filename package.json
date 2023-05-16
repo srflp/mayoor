@@ -19,7 +19,8 @@
     "database:push": "prisma db push",
     "database:seed": "ts-node --project tsconfig.nexus.json --transpile-only ./prisma/seed.ts",
     "start:full": "npm run database:migrate && npm run database:seed && npm run start",
-    "extract:translations": "i18next"
+    "extract:translations": "i18next",
+    "reset": "prisma reset"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.11.8",

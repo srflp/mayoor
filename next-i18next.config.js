@@ -14,7 +14,7 @@ module.exports = {
   i18n: {
     defaultLocale: "en",
     locales: ["en", "cs"],
-    localePath: path.resolve("./public/locales"),
+    // localePath: path.resolve("./public/locales"),
   },
   serializeConfig: false,
   use: typeof window !== "undefined" ? [ChainedBackend] : [],
