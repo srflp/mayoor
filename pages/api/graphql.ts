@@ -7,6 +7,7 @@ import { schema } from "@backend/schema";
 
 const apolloServer = new ApolloServer({
   // cache: 'bounded',
+  persistedQueries: false,
   context: createContext,
   schema,
 });
