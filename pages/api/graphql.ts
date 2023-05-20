@@ -4,12 +4,14 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 import { createContext } from "@backend/context";
 import { schema } from "@backend/schema";
+import { executor } from "@backend/executor";
 
 const apolloServer = new ApolloServer({
   // cache: 'bounded',
   persistedQueries: false,
   context: createContext,
   schema,
+  executor: executor(schema),
 });
 
 const startServer = apolloServer.start();
